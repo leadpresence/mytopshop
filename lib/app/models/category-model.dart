@@ -1,7 +1,7 @@
 ///Enum to describe services
 
-enum Category {
- all,
+enum PCategory {
+  all,
   accessories,
   clothing,
   home,

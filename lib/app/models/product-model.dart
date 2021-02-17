@@ -2,8 +2,56 @@ import 'dart:convert';
 
 import 'category-model.dart';
 
+class ProductList {
+  List <Product> products;
+  ProductList({
+    this.products,
+  });
+
+  ProductList copyWith({
+    List <Product> products,
+  }) {
+    return ProductList(
+      products: products ?? this.products,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'products':products ?.map((x) => x?.toMap())?.toList(),
+     
+    };
+  }
+
+  factory ProductList.fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+  
+    return ProductList(
+        products: List<Product>.from(map['products']?.map((x) => Product.fromMap(x))),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ProductList.fromJson(String source) => ProductList.fromMap(json.decode(source));
+
+  @override
+  String toString() => 'ProductList(products: $products)';
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+  
+    return o is ProductList &&
+      o.products == products;
+  }
+
+  @override
+  int get hashCode => products.hashCode;
+}
+
 class Product {
-   final Category category;
+   final PCategory category;
   final int id;
   final bool isFeatured;
   final String name;
@@ -17,7 +65,7 @@ class Product {
   });
 
   Product copyWith({
-    Category category,
+    PCategory category,
     int id,
     bool isFeatured,
     String name,
@@ -83,4 +131,7 @@ class Product {
       name.hashCode ^
       price.hashCode;
   }
+
+   String get assetName => '$id-0.jpg';
+  String get assetPackage => 'shrine_images';
 }
